@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Coding Animation</title>
+    <style>
+        /* 1. Animated Gradient Background */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 2. Glassmorphism Code Window */
+        .window {
+            width: 80%;
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            padding: 20px;
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* 3. Window Controls (Red, Yellow, Green dots) */
+        .dots {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        /* 4. Code Text Styling */
+        #code-content {
+            color: #f8f8f2;
+            font-size: 18px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background: #fff;
+            margin-left: 5px;
+            animation: blink 0.8s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Syntax Highlighting Colors (Simple) */
+        .keyword { color: #ff79c6; }
+        .function { color: #50fa7b; }
+        .string { color: #f1fa8c; }
+    </style>
+</head>
+<body>
+
+    <div class="window">
+        <div class="dots">
+            <div class="dot red"></div>
+            <div class="dot yellow"></div>
+            <div class="dot green"></div>
+        </div>
+        <div id="code-content"></div><span class="cursor"></span>
+    </div>
+
+    <script>
+        const codeString = `// Welcome to the Matrix
+function createMagic() {
+  const status = "Coding...";
+  console.log("Animation Active");
+  return true;
+}
+
+createMagic();`;
+
+        const codeElement = document.getElementById('code-content');
+        let index = 0;
+
+        function type() {
+            if (index < codeString.length) {
+                let char = codeString.charAt(index);
+                
+                // Optional: Simple logic to add "syntax highlighting" as it types
+                if (char === "f" && codeString.substring(index, index+8) === "function") {
+                    codeElement.innerHTML += '<span class="keyword">function</span>';
+                    index += 8;
+                } else {
+                    codeElement.innerHTML += char;
+                    index++;
+                }
+                
+                setTimeout(type, 50); // Speed of typing
+            }
+        }
+
+        // Start animation after a short delay
+        setTimeout(type, 1000);
+    </script>
+</body>
+</html>
